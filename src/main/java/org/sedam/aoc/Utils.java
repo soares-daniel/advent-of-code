@@ -69,6 +69,11 @@ public class Utils {
         return grid;
     }
 
+    /**
+     * Parse the input into a 2d array of integers
+     * @param input list of strings
+     * @return 2d array of integers
+     */
     public static int[][] parseGridInt(List<String> input) {
         int[][] grid = new int[input.size()][input.getFirst().length()];
         for (int r = 0; r < input.size(); r++) {
@@ -77,5 +82,29 @@ public class Utils {
             }
         }
         return grid;
+    }
+
+    /**
+     * Parse a line of ints separated by a delimiter
+     * @param line line of ints
+     * @param delimiter delimiter
+     * @return list of integers
+     */
+    public static List<Integer> parseLineOfInts(String line, String delimiter) {
+        return Arrays.stream(line.split(delimiter))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Parse a line of longs separated by a delimiter
+     * @param line line of longs
+     * @param delimiter delimiter
+     * @return list of longs
+     */
+    public static List<Long> parseLineOfLongs(String line, String delimiter) {
+        return Arrays.stream(line.split(delimiter))
+                .map(Long::parseLong)
+                .collect(Collectors.toList());
     }
 }
