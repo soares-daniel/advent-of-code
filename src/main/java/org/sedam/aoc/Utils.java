@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 
 public class Utils {
 
+    public static final int[][] CROSSDIRECTIONS = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    public static final int[][] DIRECTIONS = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+
     public static List<String> readLines(String filename) {
         try {
             return Files.readAllLines(Paths.get("src/main/resources/" + filename));
