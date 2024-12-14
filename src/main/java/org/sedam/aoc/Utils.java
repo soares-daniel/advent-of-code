@@ -17,7 +17,7 @@ public class Utils {
         try {
             return Files.readAllLines(Paths.get("src/main/resources/" + filename));
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read file: " + filename, e);
+            return new ArrayList<>();
         }
     }
 

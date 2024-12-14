@@ -45,10 +45,12 @@ public class DayTest {
         Method partMethod = dayObject.getClass().getMethod(methodName, List.class);
 
         // Test Part
-        String testPartResult = (String) partMethod.invoke(dayObject, testInput);
-        String expectedTestResult = TestUtils.readExpectedResult(day, part);
-        assertEquals(expectedTestResult, testPartResult, "\nDay " + day + " - Part " + part + " is not matching the expected result.");
+        if (testInput != null) { // Omits the test if there is no test input
+            String testPartResult = (String) partMethod.invoke(dayObject, testInput);
+            String expectedTestResult = TestUtils.readExpectedResult(day, part);
+            assertEquals(expectedTestResult, testPartResult, "\nDay " + day + " - Part " + part + " is not matching the expected result.");
 
+        }
         // Real Part
         String partResult = (String) partMethod.invoke(dayObject, realInput);
         System.out.println("\n\n====== Day " + day + " - Part " + part + " Result: " + partResult + " ======\n\n");
