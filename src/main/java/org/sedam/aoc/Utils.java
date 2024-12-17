@@ -6,12 +6,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Utils {
 
     public static final int[][] CROSSDIRECTIONS = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
     public static final int[][] DIRECTIONS = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+    public static final Map<Character, int[]> DIRECTIONS_MAP = Map.of(
+            '^', new int[]{-1, 0}, // {y, x}
+            'v', new int[]{1, 0},
+            '<', new int[]{0, -1},
+            '>', new int[]{0, 1}
+    );
 
     public static List<String> readLines(String filename) {
         try {
