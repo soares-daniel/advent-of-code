@@ -43,3 +43,7 @@ nb-configuration.xml
 /.quarkus/cli/plugins/
 # TLS Certificates
 .certs/
+
+
+src/main/resources/**/.aoc-status
+src/main/resources/**/input-*.txt
