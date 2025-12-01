@@ -23,12 +23,12 @@ public abstract class AbstractDay implements Day {
         }
     }
 
-    protected String loadTestInput(int partNum) {
-        return loadFile(name().toLowerCase() + "/test-" + partNum + ".txt");
+    protected String loadTestInput(int partNum, int year) {
+        return loadFile(year + "/" + name().toLowerCase() + "/test-" + partNum + ".txt");
     }
 
-    protected String loadRealInput(int partNum) {
-        return loadFile(name().toLowerCase() + "/input-" + partNum + ".txt");
+    protected String loadRealInput(int partNum, int year) {
+        return loadFile(year + "/" + name().toLowerCase() + "/input-" + partNum + ".txt");
     }
 
     protected void printResult(String label, String result, Instant start) {
@@ -59,7 +59,7 @@ public abstract class AbstractDay implements Day {
         try {
             ConsoleLog.info("Running Part 1 test ...");
             var start = Instant.now();
-            String testInput1 = loadTestInput(1);
+            String testInput1 = loadTestInput(1, year);
             if (testInput1 == null) {
                 ConsoleLog.warn("No test input found for Part 1. Skipping.");
                 return;
@@ -72,7 +72,7 @@ public abstract class AbstractDay implements Day {
                 return;
             }
 
-            String realInput1 = loadRealInput(1);
+            String realInput1 = loadRealInput(1, year);
             if (!testsOnly && realInput1 != null) {
                 ConsoleLog.info("Running Part 1 real input ...");
                 start = Instant.now();
@@ -103,7 +103,7 @@ public abstract class AbstractDay implements Day {
         try {
             ConsoleLog.info("Running Part 2 test ...");
             var start = Instant.now();
-            String testInput2 = loadTestInput(2);
+            String testInput2 = loadTestInput(2, year);
             if (testInput2 == null) {
                 ConsoleLog.warn("No test input found for Part 2. Skipping.");
                 return;
@@ -116,7 +116,7 @@ public abstract class AbstractDay implements Day {
                 return;
             }
 
-            String realInput2 = loadRealInput(2);
+            String realInput2 = loadRealInput(2, year);
             if (!testsOnly && realInput2 != null) {
                 ConsoleLog.info("Running Part 2 real input ...");
                 start = Instant.now();

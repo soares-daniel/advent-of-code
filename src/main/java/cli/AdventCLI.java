@@ -90,9 +90,13 @@ public class AdventCLI implements Runnable {
                     public class %s extends AbstractDay {
                         @Override public String name() { return "%s"; }
 
-                        @Override public String expectedTestResultPart1() { return ""; }
+                        @Override public String expectedTestResultPart1() {
+                            return "";
+                        }
 
-                        @Override public String expectedTestResultPart2() { return ""; }
+                        @Override public String expectedTestResultPart2() {
+                            return "";
+                        }
 
                         @Override public String part1(String input) {
                             // TODO implement part 1
@@ -115,9 +119,9 @@ public class AdventCLI implements Runnable {
                     ConsoleLog.info("Created " + classFileName);
                 }
 
-                Path testPath = Path.of(resourcesPath, dayName.toLowerCase(), "test-1.txt");
-                Path testPath2 = Path.of(resourcesPath, dayName.toLowerCase(), "test-2.txt");
-                Path inputPath = Path.of(resourcesPath, dayName.toLowerCase(), "input-1.txt");
+                Path testPath = Path.of(resourcesPath, year.toString(), dayName.toLowerCase(), "test-1.txt");
+                Path testPath2 = Path.of(resourcesPath, year.toString(), dayName.toLowerCase(), "test-2.txt");
+                Path inputPath = Path.of(resourcesPath, year.toString(), dayName.toLowerCase(), "input-1.txt");
                 Files.createDirectories(testPath.getParent());
 
                 if (!Files.exists(testPath)) {
