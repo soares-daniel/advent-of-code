@@ -6,6 +6,10 @@ import java.util.stream.Collectors;
 public final class StringUtils {
     private StringUtils() {}
 
+    public static List<Integer> toInts(List<String> lines) {
+        return lines.stream().map(Integer::parseInt).toList();
+    }
+
     public static List<Integer> parseLineOfInts(String line, String delimiter) {
         return Arrays.stream(line.split(delimiter))
                 .map(Integer::parseInt)

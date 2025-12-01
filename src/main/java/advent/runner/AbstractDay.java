@@ -3,7 +3,6 @@ package advent.runner;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.time.Instant;
 
@@ -24,12 +23,12 @@ public abstract class AbstractDay implements Day {
         }
     }
 
-    protected String loadTestInput() {
-        return loadFile(name().toLowerCase() + "/test.txt");
+    protected String loadTestInput(int partNum) {
+        return loadFile(name().toLowerCase() + "/test-" + partNum + ".txt");
     }
 
-    protected String loadRealInput() {
-        return loadFile(name().toLowerCase() + "/input.txt");
+    protected String loadRealInput(int partNum) {
+        return loadFile(name().toLowerCase() + "/input-" + partNum + ".txt");
     }
 
     protected void printResult(String label, String result, Instant start) {
@@ -52,13 +51,6 @@ public abstract class AbstractDay implements Day {
     public void run(boolean testsOnly, int year) {
         ConsoleLog.headline("\n=== " + name() + " ===");
 
-        String testInput = loadTestInput();
-        if (testInput == null) {
-            ConsoleLog.warn("No test input found or file is empty. Skipping.");
-            return;
-        }
-        String realInput = loadRealInput();
-
         AocClient client = new AocClient(year);
         int dayNum = extractDayNumber();
         DayStatus status = DayStatus.load(dayNum);
@@ -67,7 +59,12 @@ public abstract class AbstractDay implements Day {
         try {
             ConsoleLog.info("Running Part 1 test ...");
             var start = Instant.now();
-            String testRes = part1(testInput);
+            String testInput1 = loadTestInput(1);
+            if (testInput1 == null) {
+                ConsoleLog.warn("No test input found for Part 1. Skipping.");
+                return;
+            }
+            String testRes = part1(testInput1);
             printResult("Part 1 (test)", testRes, start);
             boolean ok = verifyAndPrint("Part 1 (test)", testRes, expectedTestResultPart1());
             if (!ok) {
@@ -75,10 +72,11 @@ public abstract class AbstractDay implements Day {
                 return;
             }
 
-            if (!testsOnly && realInput != null) {
+            String realInput1 = loadRealInput(1);
+            if (!testsOnly && realInput1 != null) {
                 ConsoleLog.info("Running Part 1 real input ...");
                 start = Instant.now();
-                String realRes = part1(realInput);
+                String realRes = part1(realInput1);
                 printResult("Part 1 (real)", realRes, start);
 
                 if (!status.isPart1Accepted()) {
@@ -105,7 +103,12 @@ public abstract class AbstractDay implements Day {
         try {
             ConsoleLog.info("Running Part 2 test ...");
             var start = Instant.now();
-            String testRes = part2(testInput);
+            String testInput2 = loadTestInput(2);
+            if (testInput2 == null) {
+                ConsoleLog.warn("No test input found for Part 2. Skipping.");
+                return;
+            }
+            String testRes = part2(testInput2);
             printResult("Part 2 (test)", testRes, start);
             boolean ok = verifyAndPrint("Part 2 (test)", testRes, expectedTestResultPart2());
             if (!ok) {
@@ -113,10 +116,11 @@ public abstract class AbstractDay implements Day {
                 return;
             }
 
-            if (!testsOnly && realInput != null) {
+            String realInput2 = loadRealInput(2);
+            if (!testsOnly && realInput2 != null) {
                 ConsoleLog.info("Running Part 2 real input ...");
                 start = Instant.now();
-                String realRes = part2(realInput);
+                String realRes = part2(realInput2);
                 printResult("Part 2 (real)", realRes, start);
                 if (!status.isPart2Accepted()) {
                     ConsoleLog.info("Submitting Part 2 result ...");

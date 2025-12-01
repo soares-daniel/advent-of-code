@@ -9,12 +9,8 @@ public final class IOUtils {
 
     private IOUtils() {}
 
-    public static List<String> readLines(String filename) {
-        try {
-            return Files.readAllLines(Paths.get("src/main/resources/" + filename));
-        } catch (IOException e) {
-            return List.of();
-        }
+    public static List<String> toLines(String input) {
+        return Arrays.asList(input.split("\\R"));
     }
 
     /** Split input into blocks separated by empty lines. */
