@@ -54,7 +54,7 @@ public class AocClient {
                     ConsoleLog.warn("Received empty response (puzzle may not be unlocked yet).");
                     return false;
                 }
-                writeToResources(day, body, fileName);
+                writeToResources(day, year, body, fileName);
                 ConsoleLog.info("Fetched input for day " + day + " successfully.");
                 return true;
             } else {
@@ -114,9 +114,9 @@ public class AocClient {
         }
     }
 
-    private void writeToResources(int day, String content, String fileName) {
+    private void writeToResources(int day, int year, String content, String fileName) {
         try {
-            String dayFolder = String.format("src/main/resources/day%02d", day);
+            String dayFolder = String.format("src/main/resources/%d/day%02d", year, day);
             Files.createDirectories(Path.of(dayFolder));
             Path output = Path.of(dayFolder, fileName.toLowerCase() + ".txt");
             Files.writeString(output, content + System.lineSeparator());
