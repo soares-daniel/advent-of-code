@@ -24,7 +24,9 @@ public abstract class AbstractDay implements Day {
     }
 
     protected String loadTestInput(int partNum, int year) {
-        return loadFile(year + "/" + name().toLowerCase() + "/test-" + partNum + ".txt");
+        String fileContent = loadFile(year + "/" + name().toLowerCase() + "/test-" + partNum + ".txt");
+        if (fileContent != null) return fileContent;
+        return loadFile(year + "/" + name().toLowerCase() + "/test.txt");
     }
 
     protected String loadRealInput(int partNum, int year) {
@@ -53,7 +55,7 @@ public abstract class AbstractDay implements Day {
 
         AocClient client = new AocClient(year);
         int dayNum = extractDayNumber();
-        DayStatus status = DayStatus.load(dayNum);
+        DayStatus status = DayStatus.load(dayNum, year);
 
         // ----------------- PART 1 -----------------
         try {
@@ -84,7 +86,7 @@ public abstract class AbstractDay implements Day {
                     boolean accepted = client.submitAnswer(dayNum, 1, realRes);
                     if (accepted) {
                         status.markPart1Accepted();
-                        status.save(dayNum);
+                        status.save(dayNum, year);
                         client.fetchInput(extractDayNumber(), "input-2");
                     }
                 } else {
@@ -95,7 +97,7 @@ public abstract class AbstractDay implements Day {
             ConsoleLog.warn("Part 1 not implemented; stopping.");
             return;
         } catch (Exception e) {
-            ConsoleLog.error("Error during Part 1: " + e.getMessage());
+            ConsoleLog.error("Error during Part 1:", e);
             return;
         }
 
@@ -127,7 +129,7 @@ public abstract class AbstractDay implements Day {
                     boolean accepted = client.submitAnswer(dayNum, 2, realRes);
                     if (accepted) {
                         status.markPart2Accepted();
-                        status.save(dayNum);
+                        status.save(dayNum, year);
                     }
                 } else {
                     ConsoleLog.info("Skipping Part 2 submission (already accepted).");
@@ -136,7 +138,7 @@ public abstract class AbstractDay implements Day {
         } catch (NotImplementedException e) {
             ConsoleLog.warn("Part 2 not implemented.");
         } catch (Exception e) {
-            ConsoleLog.error("Error during Part 2: " + e.getMessage());
+            ConsoleLog.error("Error during Part 2", e);
         }
     }
 

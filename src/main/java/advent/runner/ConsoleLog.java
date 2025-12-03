@@ -27,4 +27,9 @@ public final class ConsoleLog {
     public static void error(String message) {
         System.err.println(RED + "[ERROR] " + RESET + message);
     }
+
+    public static void error(String message, Exception e) {
+        System.err.println(RED + "[ERROR] " + RESET + message);
+        e.printStackTrace();
+    }
 }

@@ -45,4 +45,8 @@ public final class StringUtils {
         }
         return result;
     }
+
+    public static List<String> split(String s, String separator) {
+        return Arrays.asList(s.split(separator));
+    }
 }

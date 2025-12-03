@@ -15,8 +15,8 @@ public class DayStatus {
     public void markPart1Accepted() { this.part1Accepted = true; }
     public void markPart2Accepted() { this.part2Accepted = true; }
 
-    public static DayStatus load(int day) {
-        Path file = statusFile(day);
+    public static DayStatus load(int day, int year) {
+        Path file = statusFile(day, year);
         if (!Files.exists(file)) {
             return new DayStatus();
         }
@@ -32,19 +32,19 @@ public class DayStatus {
         }
     }
 
-    public void save(int day) {
-        Path file = statusFile(day);
+    public void save(int day, int year) {
+        Path file = statusFile(day, year);
         try {
             Files.createDirectories(file.getParent());
             String text = String.format("part1=%s%spart2=%s%n",
                     part1Accepted, System.lineSeparator(), part2Accepted);
             Files.writeString(file, text);
         } catch (IOException e) {
-            ConsoleLog.warn("Could not write status file for day " + day);
+            ConsoleLog.warn("Could not write status file for day " + day + "and year " + year);
         }
     }
 
-    private static Path statusFile(int day) {
-        return Path.of("src/main/resources/day" + String.format("%02d", day), ".aoc-status");
+    private static Path statusFile(int day, int year) {
+        return Path.of("src/main/resources/" + year + "/day" + String.format("%02d", day), ".aoc-status");
     }
 }

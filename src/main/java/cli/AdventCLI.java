@@ -119,8 +119,7 @@ public class AdventCLI implements Runnable {
                     ConsoleLog.info("Created " + classFileName);
                 }
 
-                Path testPath = Path.of(resourcesPath, year.toString(), dayName.toLowerCase(), "test-1.txt");
-                Path testPath2 = Path.of(resourcesPath, year.toString(), dayName.toLowerCase(), "test-2.txt");
+                Path testPath = Path.of(resourcesPath, year.toString(), dayName.toLowerCase(), "test.txt");
                 Path inputPath = Path.of(resourcesPath, year.toString(), dayName.toLowerCase(), "input-1.txt");
                 Files.createDirectories(testPath.getParent());
 
@@ -129,13 +128,6 @@ public class AdventCLI implements Runnable {
                     ConsoleLog.info("Created " + testPath);
                 } else {
                     ConsoleLog.warn("Test file already exists: " + testPath);
-                }
-
-                if (!Files.exists(testPath2)) {
-                    Files.writeString(testPath2, System.lineSeparator(), StandardOpenOption.CREATE_NEW);
-                    ConsoleLog.info("Created " + testPath2);
-                } else {
-                    ConsoleLog.warn("Test file already exists: " + testPath2);
                 }
 
                 if (!Files.exists(inputPath)) {
