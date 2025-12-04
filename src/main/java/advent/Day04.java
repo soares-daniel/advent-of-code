@@ -20,21 +20,22 @@ public class Day04 extends AbstractDay {
     }
 
     @Override public String part1(String input) {
-        String[][] grid = GridUtils.parseGrid(IOUtils.toLines(input));
+        char[][] grid = GridUtils.parseGridChar(IOUtils.toLines(input));
         int rolls = 0;
         int h = grid.length;
         int w = grid[0].length;
         for (int r=0; r<h; r++) {
             for (int c=0; c < w; c++) {
-                if (!grid[r][c].equals("@")) continue;
+                if (grid[r][c] != '@') continue;
+                int count = 0;
+                for (int[] d : GridUtils.EIGHT) {
+                    int nr = r + d[0];
+                    int nc = c + d[1];
+                    if (nr < 0 || nr >= h || nc < 0 || nc >= w) continue;
+                    if (grid[nr][nc] == '@') count++;
+                }
 
-                GridUtils.Point p = new GridUtils.Point(r, c);
-                List<GridUtils.Point> neighbours = GridUtils.neighbours8(p, h, w);
-                long adjacentRolls = neighbours.stream()
-                        .filter(np -> grid[np.row()][np.col()].equals("@"))
-                        .count();
-
-                if (adjacentRolls < 4) {
+                if (count < 4) {
                     rolls++;
                 }
             }
@@ -43,37 +44,54 @@ public class Day04 extends AbstractDay {
     }
 
     @Override public String part2(String input) {
-        String[][] grid = GridUtils.parseGrid(IOUtils.toLines(input));
-        int rolls = 0;
+        char[][] grid = GridUtils.parseGridChar(IOUtils.toLines(input));
         int h = grid.length;
         int w = grid[0].length;
+        int totalRemoved = 0;
 
+        boolean[][] candidate = new boolean[h][w];
+        for (int r = 0; r < h; r++) {
+            for (int c = 0; c < w; c++) {
+                candidate[r][c] = grid[r][c] == '@';
+            }
+        }
+
+        boolean changed;
         do {
-            int lastCount = 0;
-            List<GridUtils.Point> rollsRemoved = new ArrayList<>();
-            for (int r=0; r<h; r++) {
-                for (int c=0; c < w; c++) {
-                    if (!grid[r][c].equals("@")) continue;
+            changed = false;
+            boolean[][] nextCandidate = new boolean[h][w];
+            for (int r = 0; r < h; r++) {
+                for (int c = 0; c < w; c++) {
+                    if (!candidate[r][c] || grid[r][c] != '@') continue;
 
-                    GridUtils.Point p = new GridUtils.Point(r, c);
-                    List<GridUtils.Point> neighbours = GridUtils.neighbours8(p, h, w);
-                    long adjacentRolls = neighbours.stream()
-                            .filter(np -> grid[np.row()][np.col()].equals("@"))
-                            .count();
+                    int count = 0;
+                    for (int[] d : GridUtils.EIGHT) {
+                        int nr = r + d[0];
+                        int nc = c + d[1];
+                        if (nr < 0 || nr >= h || nc < 0 || nc >= w) continue;
+                        if (grid[nr][nc] == '@') count++;
+                    }
 
-                    if (adjacentRolls < 4) {
-                        lastCount++;
-                        rollsRemoved.add(p);
+                    if (count < 4) {
+                        grid[r][c] = '.';
+                        totalRemoved++;
+                        changed = true;
+
+                        for (int[] d : GridUtils.EIGHT) {
+                            int nr = r + d[0];
+                            int nc = c + d[1];
+                            if (nr >= 0 && nr < h && nc >= 0 && nc < w) {
+                                nextCandidate[nr][nc] = true;
+                            }
+                        }
                     }
                 }
             }
-            for (GridUtils.Point p : rollsRemoved) {
-                grid[p.row()][p.col()] = ".";
-            }
-            if (lastCount == 0) break;
-            rolls += lastCount;
-        } while (true);
-        return rolls + "";
+
+            candidate = nextCandidate;
+        } while (changed);
+
+        return totalRemoved + "";
     }
 }
 
