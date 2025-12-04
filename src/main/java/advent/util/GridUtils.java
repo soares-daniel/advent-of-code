@@ -44,6 +44,16 @@ public final class GridUtils {
         return grid;
     }
 
+    public static char[][] parseGridChar(List<String> input) {
+        int rows = input.size();
+        int cols = input.getFirst().length();
+        char[][] grid = new char[rows][cols];
+        for (int r = 0; r < rows; r++)
+            for (int c = 0; c < cols; c++)
+                grid[r][c] = input.get(r).charAt(c);
+        return grid;
+    }
+
     public static int[][] parseGridInt(List<String> input) {
         int rows = input.size();
         int cols = input.getFirst().length();
